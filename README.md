@@ -1,30 +1,22 @@
-# Logger-project
+# Logger project overview
 
 
 ## Abstract
-This project aimed to improve and upgrade an existing Raspberry Pi-based logging system used to monitor data from iLOQ S5 door modules. The original system parsed serial data and sent it to
-a server but lacked remote connectivity and had stability issues.
+The project aimed to improve and upgrade an existing Raspberry Pi–based logging system that was used to monitor data from iLOQ S5 door modules. The original system parsed serial data and transmitted it to a server; however, it lacked remote connectivity and experienced stability issues.
 
-The main goals were to add remote access via AWS IoT Core, fix some issues, and improve usability. A Raspberry Pi 4 running Debian Linux was used as the core platform. The system includes
-a C#-based serial parser that filters and logs data from the DUT. Key updates to the parser included removing duplicate or irrelevant data via a new filter and adding error handling for device
-disconnection.
+The primary objectives were to implement remote access via AWS IoT Core, resolve identified issues, and enhance overall usability. A Raspberry Pi 4 Model B running Debian Linux was used as the core platform. The system included a C#-based serial parser that filtered and logged data from the Device Under Test (DUT). An existing and functional C# codebase was utilized as a foundation, and several improvements were implemented. These enhancements included the introduction of a new filtering mechanism to remove duplicate or irrelevant data and the addition of error handling to manage device disconnection scenarios.
 
-The project integrated AWS IoT Core for remote SSH access using certificates and Docker containers to isolate the AWS client, ensuring a clean and conflict-free environment. Datadog was used to collect and display metrics and logs from the Raspberry Pi.
-System automation was handled using Linux services and shell scripts. These scripts managed startup processes, monitored service uptime, and regularly cleared log files using Anacron.
+The project integrated AWS IoT Core to enable secure remote SSH access using device-specific certificates. Docker containers were used to isolate the AWS client environment, ensuring a clean and conflict-free setup. Additionally, Datadog was implemented to collect and visualize system metrics and log data from the Raspberry Pi.
 
-Overall, the project result was a success, remotely accessible logging system with improved stability, filtering and automation, providing ILOQ with a better device to monitor and analyze data.
+System automation was managed through Linux system services and shell scripts. These scripts handled startup procedures, monitored service availability, and periodically cleared log files using Anacron to ensure consistent system maintenance.
+
+Overall, the project outcome was a stable and remotely accessible logging system with improved filtering, enhanced reliability, and automated maintenance processes. The upgraded solution provided iLOQ with a more robust device for monitoring and analyzing system data.
 
 
 ## System overview
-We had a Debian Linux server on Raspberry Pi 4 Model B, which contained the serial parser code
-written with C# and several system services and shell scripts. We used an already existing and
-working C# code and fixed and added new features to it. The DUT, which in this case is iLOQ S5
-module, works with the serial parser code.
+The system architecture consisted of a Debian Linux server running on the Raspberry Pi 4 Model B. The device hosted the C#-based serial parser application along with several system services and supporting shell scripts. The existing serial parser code was extended and refined with additional features and stability improvements. The DUT, in this case the iLOQ S5 module, communicated directly with the serial parser application.
 
-Our Raspberry Pi had a Datadog-agent installed on it and serial parser sent data to Datadog
-server through the agent. Raspberry Pi had individual certificates downloaded from AWS Iot Core
-and therefore AWS got the SSH remote connection to Raspberry Pi. We used Docker on Linux to
-establish a connection between AWS and Raspberry Pi via SSH.
+A Datadog agent was installed on the Raspberry Pi, and the serial parser transmitted collected data to the Datadog server through this agent. The Raspberry Pi used individual certificates obtained from AWS IoT Core to establish secure authentication. Docker was used within the Linux environment to create a secure SSH connection between AWS and the Raspberry Pi, enabling remote access and management.
 
 <img width="1881" height="1252" alt="iLOQ Raspberry Pi logger" src="https://github.com/user-attachments/assets/df879898-259d-462e-afb0-87a2c38cb049" />
 
